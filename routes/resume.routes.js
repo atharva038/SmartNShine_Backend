@@ -77,12 +77,11 @@ router.post(
 );
 
 // Protected routes - categorize skills with AI (requires authentication + AI rate limiting + quota check)
-// NOTE: No resumeId check needed - this is text processing only, can be used for new resumes
 router.post(
   "/categorize-skills",
   authenticateToken,
   checkSubscription,
-  // checkResumeSubscriptionAccess removed - not needed for text-only processing
+  checkResumeSubscriptionAccess, // NEW: Check if resume's subscription is active
   checkUsageLimit("aiGenerationsPerMonth"),
   aiLimiter,
   checkAIQuota,
